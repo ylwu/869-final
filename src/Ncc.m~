@@ -1,0 +1,13 @@
+function ncc = Ncc(v0,v1)
+%assume these are already in n*3 vector format
+n=size(v0,2);
+%normalize for each color channel first
+%v0=v0./repmat(sum(v0,1),n,1);
+%v1=v1./repmat(sum(v1,1),n,1);
+
+%calculate ncc
+v0_mean = sum(sum(v0))/(n*3);
+v1_mean = sum(sum(v1))/(n*3);
+
+dot(
+end

@@ -1,5 +1,5 @@
 function v = Find_window_vector(p, image, m)
-%untested!
+
 %will not include colors outsdie the image
 [row, col]=size(image);
 
@@ -15,7 +15,13 @@ function v = Find_window_vector(p, image, m)
     end_row  = min(row,p(1)+right);
     start_col = max(1,p(2)-left);
     end_col = min(col, p(2)+right);
-    [X,Y] = meshgrid(start_row:end_row,start_col:end_col);
-    %check this!
-    v = image((X,Y,:));
+    v=zeros(m*m,3);
+    count=1;
+    for i=start_row:end_row,
+        for j=start_col:end_col,
+            v(count,:)=image(i,j,:);
+            count=count+1;
+        end
+    end
+    
 end

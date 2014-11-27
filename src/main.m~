@@ -9,9 +9,8 @@ d_inc = 0.3; %search increment for D
 height = 480;
 width  = 640;
 nImages = 47;
-all_depth_map = zeros(height,width,nImages);
-weight_map = zeros(height,width,nImages);
-for imageIndex = 1:1
+all_depth_map = zeros(nImages,height,width);
+for imageIndex = 1:nImages
     disp('imageIndex');
     disp(imageIndex);
    neighbor_indices = findNeighbors(imageIndex,k,nImages);
@@ -26,8 +25,7 @@ for imageIndex = 1:1
            %p is a length 3 vector contains RGB value of the pixel
            v0 = Find_window_vector([rowIndex,colIndex],im,m);
            d_max = 0;
-           crr_max = 0;
-           Cv_max = [];%vector of all valid nccs
+           CV_max = 0;
            s = 0;
            for d = D_min: d_inc: D_max
                 CV = [];
@@ -44,18 +42,18 @@ for imageIndex = 1:1
                         end
                     end
                 end
-                crr = Corr(CV);
-                if crr > crr_max
-                    crr_max = crr;
+                CV_valid = Corr(CV);
+                if CV_valid > CV_max
+                    CV_max = CV_valid;
+                    clear d_max;
                     d_max = d;
-                    Cv_max = CV;
+                    if (~isempty(CV))
+                        s = size(CV,2);
+                    end
                 end
            end
-           conf = Conf(Cv_max,thresh,k);
-           if isnan(conf)
-                all_depth_map(rowIndex,colIndex,imageIndex) = d;
-                weight_map(rowIndex,colIndex,imageIndex) = conf;
-           end
+           conf = Conf(CV_max,thresh,s);
+           all_depth_map(imageIndex,rowIndex,colIndex) = conf;
        end
    end
 end

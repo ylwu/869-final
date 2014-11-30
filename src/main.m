@@ -4,8 +4,8 @@ k = 4; % number of neighbors
 m = 5; %window size
 thresh = .6;
 D_min = 2;
-D_max = 12; %TODO: change D_max to actual value
-d_inc = 1; %search increment for D
+D_max = 20; %TODO: change D_max to actual value
+d_inc = 2; %search increment for D
 
 height = 480;
 width  = 640;
@@ -21,7 +21,7 @@ end
 fileID = fopen('../data/templeRing/templeR_par.txt');
 C=textscan(fileID,'%s %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f');
 fclose(fileID);
-for imageIndex = 4:4
+for imageIndex = 1:nImages
    neighbor_indices = findNeighbors(imageIndex,k,nImages)
    neighbor1 = loadImage(all_images,neighbor_indices(1));
    neighbor2 = loadImage(all_images,neighbor_indices(2));

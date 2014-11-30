@@ -1,4 +1,5 @@
 clear;
+clc;
 k = 4; % number of neighbors
 m = 5; %window size
 thresh = .6;

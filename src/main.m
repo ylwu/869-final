@@ -2,9 +2,9 @@ clear;
 k = 4; % number of neighbors
 m = 5; %window size
 thresh = .6;
-D_min = 0;
-D_max = 10; %TODO: change D_max to actual value
-d_inc = 2; %search increment for D
+D_min = 2;
+D_max = 12; %TODO: change D_max to actual value
+d_inc = 1; %search increment for D
 
 height = 480;
 width  = 640;
@@ -75,8 +75,8 @@ for imageIndex = 4:4
                 end
            end
            conf = Conf(Cv_max,thresh,k);
-           if isnan(conf)
-                all_depth_map(rowIndex,colIndex,imageIndex) = d;
+           if ~isnan(conf)
+                all_depth_map(rowIndex,colIndex,imageIndex) = d_max;
                 weight_map(rowIndex,colIndex,imageIndex) = conf;
            end
        end

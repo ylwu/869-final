@@ -1,6 +1,6 @@
 function corr = Corr(Cv)
     if size(Cv,2)==0,
-        corr = NaN;
+        corr = 0;
     else
         corr = mean(Cv);
     end

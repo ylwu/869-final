@@ -1,6 +1,6 @@
 function v = Find_window_vector(p, image, m)
 
-%will not include colors outsdie the image
+%will not include colors outside the image
 [row, col, ~]=size(image);
 
     if mod(m,2)==0, %even

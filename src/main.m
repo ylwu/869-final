@@ -1,12 +1,11 @@
 clear;
 clc;
-tic
 k = 4; % number of neighbors
 m = 5; %window size
 thresh = .6;
 D_min = 1;
-D_max = 40; %TODO: change D_max to actual value
-d_inc = 0.1; %search increment for D
+D_max = 2; %TODO: change D_max to actual value
+d_inc = 0.02; %search increment for D
 
 height = 480;
 width  = 640;
@@ -33,6 +32,7 @@ for imageIndex = 3:3
    im_w = size(im,2);
    [K0,R0,t0] = findLocation(imageIndex,C);
    P0 = projectionMatrix(K0,R0,t0);
+   inv_P0 = inv(P0);
    PMatrix_neighbors = {};
    for i = 1:k
        [K,R,t] = findLocation(neighbor_indices(i),C);
@@ -41,6 +41,7 @@ for imageIndex = 3:3
    
    %iterate through pixels in the image
    parfor rowIndex = 1: im_h
+       tic
        for colIndex = 1: im_w
            %p is a length 3 vector contains RGB value of the pixel
            v0 = Find_window_vector([rowIndex,colIndex],im,m);
@@ -52,7 +53,7 @@ for imageIndex = 3:3
                 CV = [];
                 for n = 1:k
                     PK = PMatrix_neighbors{n};
-                    pk = Pixel_location([rowIndex,colIndex],d,P0,PK);
+                    pk = Pixel_location([rowIndex,colIndex],d,inv_P0,PK);
                     if pk(1) <= 640 && pk(1) > 0 && pk(2) <= 480 && pk(2) > 0
                         im_k = loadNeighborImage(neighbor1,neighbor2,neighbor3,neighbor4,n);
                         v1 = Find_window_vector(pk,im_k,m);
@@ -74,10 +75,11 @@ for imageIndex = 3:3
                 all_depth_map(rowIndex,colIndex,imageIndex) = d_max;
                 weight_map(rowIndex,colIndex,imageIndex) = conf;
            end
+  
        end
+       toc
    end
    
 end
-toc
-save('all_depth_map_8.mat','all_depth_map');
+save('all_depth_map_3.mat','all_depth_map');
     

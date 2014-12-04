@@ -43,6 +43,9 @@ for imageIndex = 3:3
    parfor rowIndex = 1: im_h
        tic
        for colIndex = 1: im_w
+           if mean(im(rowIndex,colIndex,:)) < 2
+               continue;
+           end
            %p is a length 3 vector contains RGB value of the pixel
            v0 = Find_window_vector([rowIndex,colIndex],im,m);
            d_max = 0;
@@ -53,8 +56,8 @@ for imageIndex = 3:3
                 CV = [];
                 for n = 1:k
                     PK = PMatrix_neighbors{n};
-                    pk = Pixel_location([rowIndex,colIndex],d,inv_P0,PK);
-                    if pk(1) <= 640 && pk(1) > 0 && pk(2) <= 480 && pk(2) > 0
+                    pk = Pixel_location([colIndex,rowIndex],d,inv_P0,PK);
+                    if pk(1) <= 480 && pk(1) > 0 && pk(2) <= 640 && pk(2) > 0
                         im_k = loadNeighborImage(neighbor1,neighbor2,neighbor3,neighbor4,n);
                         v1 = Find_window_vector(pk,im_k,m);
                         ncc = Ncc(v0,v1);

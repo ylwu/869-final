@@ -2,10 +2,10 @@ clear;
 clc;
 k = 4; % number of neighbors
 m = 5; %window size
-thresh = .6;
+thresh = .7;
 D_min = 1;
 D_max = 2; %TODO: change D_max to actual value
-d_inc = 0.02; %search increment for D
+d_inc = 0.01; %search increment for D
 
 height = 480;
 width  = 640;
@@ -21,7 +21,8 @@ end
 fileID = fopen('../data/templeRing/templeR_par.txt');
 C=textscan(fileID,'%s %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f');
 fclose(fileID);
-for imageIndex = 3:3
+for imageIndex = 1:5:26
+   tic
    neighbor_indices = findNeighbors(imageIndex,k,nImages)
    neighbor1 = loadImage(all_images,neighbor_indices(1));
    neighbor2 = loadImage(all_images,neighbor_indices(2));
@@ -41,9 +42,8 @@ for imageIndex = 3:3
    
    %iterate through pixels in the image
    parfor rowIndex = 1: im_h
-       tic
        for colIndex = 1: im_w
-           if mean(im(rowIndex,colIndex,:)) < 2
+           if mean(im(rowIndex,colIndex,:)) <= 1
                continue;
            end
            %p is a length 3 vector contains RGB value of the pixel
@@ -80,9 +80,9 @@ for imageIndex = 3:3
            end
   
        end
-       toc
    end
-   
+   toc
 end
 save('all_depth_map_3.mat','all_depth_map');
+save('weight_map.mat','weight_map');
     

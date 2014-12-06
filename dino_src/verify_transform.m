@@ -1,6 +1,6 @@
 
 
-fileID = fopen('../data/templeRing/templeR_par.txt');
+fileID = fopen('../data/dino/dino_par.txt');
 C=textscan(fileID,'%s %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f');
 fclose(fileID);
 [K6,R6,t6] = findLocation(13,C);

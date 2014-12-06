@@ -1,5 +1,5 @@
 function im = readImage(n)
-    src_image_prefix = '../data/templeRing/templeR00';
+    src_image_prefix = '../data/dino/dino00';
     src_image_suffix = '.png';
     image_uri = '';
     if n < 10

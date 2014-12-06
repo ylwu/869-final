@@ -2,3 +2,5 @@
 *~
 *.mat
 *.ply
+interm_data/
+*.png

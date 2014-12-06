@@ -1,3 +1,5 @@
+%save result as neighbor_count
+%save data as noisy_data
 neighbor=load('neighbor_count.mat');
 noisy=load('noisy_data');
 thresh=2;

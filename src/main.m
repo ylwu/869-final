@@ -21,7 +21,7 @@ end
 fileID = fopen('../data/templeRing/templeR_par.txt');
 C=textscan(fileID,'%s %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f');
 fclose(fileID);
-for imageIndex = 1:5:26
+for imageIndex = [4:5:29,5:5:30]
    tic
    neighbor_indices = findNeighbors(imageIndex,k,nImages)
    neighbor1 = loadImage(all_images,neighbor_indices(1));
@@ -42,6 +42,7 @@ for imageIndex = 1:5:26
    
    %iterate through pixels in the image
    parfor rowIndex = 1: im_h
+       %rowIndex
        for colIndex = 1: im_w
            if mean(im(rowIndex,colIndex,:)) <= 1
                continue;

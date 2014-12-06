@@ -1,19 +1,19 @@
-load('all_depth_map_23.mat');
-load('weight_map_23.mat');
+load('all_depth_map1234.mat');
+load('all_weight_map1234.mat');
 
 boundbox_min = [-0.023121; -0.038009 ;-0.091940];
 boundbox_max = [0.078626; 0.121636; -0.017395];
 row = 480;
 col = 640;
 
-output=zeros(3,row*col*12);
+output=zeros(3,row*col*30);
 fileID = fopen('../data/templeRing/templeR_par.txt');
 C=textscan(fileID,'%s %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f');
 fclose(fileID);
 count=1;
 
-for i=[2:5:27,3:5:28]
-    depth=all_depth_map(:,:,i);
+for i= 1:30
+    depth=depth_map(:,:,i);
     [K,R,t] = findLocation(i,C);
     P = projectionMatrix(K,R,t);
     invp=inv(P);
@@ -21,7 +21,7 @@ for i=[2:5:27,3:5:28]
     for y=1:row
         for x=1:col
             z=depth(y,x,1);
-            if z~=0 && weight_map(y,x,i) > 700
+            if z~=0 && weight_map_all(y,x,i) > 600
                 v=invp*[x;y;1;z];
                 v=v/v(4);
                 loc = v(1:3);

@@ -1,5 +1,5 @@
 clear
-
+tic
 fileID = fopen('depth.txt');
 C=textscan(fileID,'%f %f %f');
 fclose(fileID);
@@ -54,4 +54,5 @@ fprintf(fid, 'ply\n format ascii 1.0\nelement vertex %d\nproperty float x\nprope
 % two values appear on each row of the file
 fprintf(fid, '%f  %f %f\n', output(:,1:count));
 fclose(fid);
+toc
 
